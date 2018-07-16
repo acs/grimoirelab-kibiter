@@ -4,7 +4,7 @@ MAINTAINER David Pose <dpose@bitergia.com>, Alvaro del Castillo <acs@bitergia.co
 # Image for developing Kibiter/Kibana
 
 # ENV KIBANA_BRANCH master
-ENV KIBANA_BRANCH integration-6.3.1
+ENV KIBANA_BRANCH integration-6.3.1-nobrand
 # ENV KIBANA_REPO https://github.com/grimoirelab/kibiter.git
 ENV KIBANA_REPO https://github.com/acs/grimoirelab-kibiter.git
 
