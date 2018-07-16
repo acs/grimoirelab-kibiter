@@ -5,6 +5,8 @@ MAINTAINER David Pose <dpose@bitergia.com>, Alvaro del Castillo <acs@bitergia.co
 
 # ENV KIBANA_BRANCH master
 ENV KIBANA_BRANCH integration-6.1.0-grimoirelab
+# ENV KIBANA_REPO https://github.com/grimoirelab/kibiter.git
+ENV KIBANA_REPO https://github.com/acs/grimoirelab-kibiter.git
 
 # add our user and group first to make sure their IDs get assigned consistently
 RUN groupadd --system kibana && \
@@ -36,7 +38,7 @@ RUN apt-get update && \
     gem install ffi && \
     gem install fpm -v 1.5.0 && \
     gem install pleaserun -v 0.0.24 && \
-    git clone --depth 1 --branch ${KIBANA_BRANCH} https://github.com/grimoirelab/kibiter.git && \
+    git clone --depth 1 --branch ${KIBANA_BRANCH} ${KIBANA_REPO} && \
     cd kibiter && \
     nvm install "$( cat .node-version )" && \
     npm install -g grunt-cli && \
