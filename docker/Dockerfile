@@ -38,7 +38,7 @@ RUN apt-get update && \
     gem install ffi && \
     gem install fpm -v 1.5.0 && \
     gem install pleaserun -v 0.0.24 && \
-    git clone --depth 1 --branch ${KIBANA_BRANCH} ${KIBANA_REPO} && \
+    git clone --depth 1 --branch ${KIBANA_BRANCH} ${KIBANA_REPO} kibiter && \
     cd kibiter && \
     nvm install "$( cat .node-version )" && \
     npm install -g grunt-cli && \
