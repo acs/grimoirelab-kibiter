@@ -50,12 +50,8 @@ RUN apt-get update && \
     nvm install "$( cat .node-version )" && \
     # npm install && \
     yarn kbn bootstrap && \
-    # grunt-cli is used to build the kibiter tgz packages
-    npm install -g grunt-cli && \
     # Build the kibiter package
-    sed -e "/return \[/,/\].map/ {/\(windows\|darwin\|x86\)/ d;s/,//g}" -i tasks/config/platforms.js && \
-    grunt --no-color _build:downloadNodeBuilds:start _build:downloadNodeBuilds:finish && \
-    grunt --no-color build && \
+    node scripts/build --oss --skip-os-packages --release && \
     tar xfz target/kibiter-*-linux-x86_64.tar.gz --directory /opt && \
     mv /opt/kibiter-*-linux-x86_64* /opt/kibana && \
     chown -R kibana:kibana /opt/kibana  && \
