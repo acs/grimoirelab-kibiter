@@ -52,8 +52,8 @@ RUN apt-get update && \
     yarn kbn bootstrap && \
     # Build the kibiter package
     node scripts/build --oss --skip-os-packages --release && \
-    tar xfz target/kibiter-*-linux-x86_64.tar.gz --directory /opt && \
-    mv /opt/kibiter-*-linux-x86_64* /opt/kibana && \
+    tar xfz target/kibana-*-linux-x86_64.tar.gz --directory /opt && \
+    mv /opt/kibana-*-linux-x86_64* /opt/kibana && \
     chown -R kibana:kibana /opt/kibana  && \
     # Install dotplot plugin: https://github.com/dlumbrer/kbn_dotplot
     cd /opt/kibana/plugins && \
