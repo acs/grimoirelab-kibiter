@@ -16,7 +16,7 @@ RUN groupadd --system kibana && \
 # ruby gems are used for building binary packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-            ca-certificates dirmngr gnupg \
+            apt-transport-https ca-certificates dirmngr gnupg \
             curl \
             wget \
             git \
@@ -38,11 +38,18 @@ RUN apt-get update && \
     gem install ffi && \
     gem install fpm -v 1.5.0 && \
     gem install pleaserun -v 0.0.24 && \
+    # install yarn used from Kibana 6.2.2 to install dependencies
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && apt-get -y --no-install-recommends install yarn && \
+#RUN    . /root/.bashrc && \
     git clone --depth 1 --branch ${KIBANA_BRANCH} ${KIBANA_REPO} kibiter && \
     cd kibiter && \
     nvm install "$( cat .node-version )" && \
+    # npm install && \
+    yarn kbn bootstrap && \
+    # grunt-cli is used to build the kibiter tgz packages
     npm install -g grunt-cli && \
-    npm install && \
     # Build the kibiter package
     sed -e "/return \[/,/\].map/ {/\(windows\|darwin\|x86\)/ d;s/,//g}" -i tasks/config/platforms.js && \
     grunt --no-color _build:downloadNodeBuilds:start _build:downloadNodeBuilds:finish && \
