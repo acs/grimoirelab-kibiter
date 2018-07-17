@@ -40,7 +40,9 @@ RUN apt-get update && \
     gem install pleaserun -v 0.0.24 && \
     # install yarn used from Kibana 6.2.2 to install dependencies
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    # echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    # 1.9.0 is needed because a bug in 1.7.0: https://github.com/elastic/kibana/issues/19641
+    echo "deb https://nightly.yarnpkg.com/debian/ nightly main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && apt-get -y --no-install-recommends install yarn && \
 #RUN    . /root/.bashrc && \
     git clone --depth 1 --branch ${KIBANA_BRANCH} ${KIBANA_REPO} kibiter && \
