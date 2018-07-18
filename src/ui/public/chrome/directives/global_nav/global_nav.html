@@ -10,7 +10,7 @@
     <a
       class="global_nav_logo"
       ng-class="{ active: isHomeActive() }"
-      href="{{ getHref('/app/kibana#/home') }}"
+      href="{{ getHref('/app/kibana#/dashboard/Overview') }}"
       data-test-subj="kibanaLogo"
     >
       <ul>
@@ -33,6 +33,10 @@
           aria-label="{{ appTitle }} home"
           class="logo-small visible-sm hidden-xs"
         ></li>
+       <li
+     	 style="background-color: #f68712; color: #fff; max-height: 25px; overflow: hidden; list-style-type: none;"
+       ><span style="margin-left:25px;">{{$root.appTitleCustom}}</span></li>
+
       </ul>
     </a>
   </div>
