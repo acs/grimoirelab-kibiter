@@ -84,7 +84,7 @@ RUN apt-get update && \
     apt-get autoremove --purge -y && \
     apt-get clean && \
     find /var/lib/apt/lists -type f -delete && \
-    rm -rf /root/.npm /root/.node-gyp /root/.nvm /tmp/* /var/tmp/* && \
+    rm -rf /root/.npm /root/.node-gyp /root/.nvm /tmp/* /var/tmp/* /usr/local/share/.cache && \
     bash -c 'find /usr/share/locale -maxdepth 1 -mindepth 1 -type d | grep -v -e "en_US" | xargs rm -rfv' && \
     bash -c 'localedef --list-archive | grep -v -e "en_US" | xargs localedef --delete-from-archive' && \
     rm -rf /usr/share/doc/*
@@ -101,8 +101,9 @@ RUN arch="$(dpkg --print-architecture)" \
 
 ENV PATH /opt/kibana/bin:$PATH
 
-# Remove kibana optimize so it is regenerated when we modify src files in containers
-# RUN rm -rf /opt/kibana/optimize/*
+# Create the optimized version of Kibana to speed up the initial loading time
+RUN rm -rf /opt/kibana/optimize/*
+RUN ./opt/kibana/bin/kibana | sleep 200 > /tmp/run_kibana_log.txt
 
 COPY ./docker-entrypoint.sh /
 
