@@ -28,12 +28,14 @@ if [ "$1" = 'kibana' ]; then
                 sed -e "s/title: 'Kibana',$/title: '$PROJECT_NAME',/" -i /opt/kibana/src/core_plugins/kibana/index.js
 								sed -e "s|__PROJECT__|$PROJECT_NAME|" -i /opt/kibana/src/ui/views/chrome.jade
         fi
-        if [ "$ELASTICSEARCH_USER" != "" ]; then
-                #elasticsearch.username: "user"
-                #elasticsearch.password: "pass"
-                sed -e "s|^#elasticsearch.username:.*$|elasticsearch.username: \"$ELASTICSEARCH_USER\"|" -i /opt/kibana/config/kibana.yml
-                sed -e "s|^#elasticsearch.password:.*$|elasticsearch.password: \"$ELASTICSEARCH_PASSWORD\"|" -i /opt/kibana/config/kibana.yml
+
+        if [ "$ELASTICSEARCH_USER" == "" ]; then
+                ELASTICSEARCH_USER="kibanaserver"
+                ELASTICSEARCH_PASSWORD="kibanaserver"
         fi
+
+        sed -e "s|^#elasticsearch.username:.*$|elasticsearch.username: \"$ELASTICSEARCH_USER\"|" -i /opt/kibana/config/kibana.yml
+        sed -e "s|^#elasticsearch.password:.*$|elasticsearch.password: \"$ELASTICSEARCH_PASSWORD\"|" -i /opt/kibana/config/kibana.yml
 
 	set -- gosu kibana "$@"
 fi

@@ -78,6 +78,15 @@ RUN apt-get update && \
     cd network_vis && \
     npm install  && \
     cd /root && \
+    # Install Search-Guard Custom Bitergia plugin: https://github.com/Bitergia/search-guard-kibana-plugin
+    cd /opt/kibana/plugins && \
+    wget https://github.com/acs/search-guard-kibana-plugin/releases/download/6.3.1-CROSSMINER/searchguard-biter-6.3.1-14-beta-1-crossminer.zip && \
+    unzip searchguard-biter-6.3.1-14-beta-1-crossminer.zip && \
+    cd .. && \
+    # Add Search-Guard configuration to kibana.yml
+    echo 'elasticsearch.ssl.verificationMode: none' >> /opt/kibana/config/kibana.yml && \
+    echo 'searchguard.basicauth.enabled: true' >> /opt/kibana/config/kibana.yml && \
+    echo '#searchguard.basicauth.login.contact_email:' >> /opt/kibana/config/kibana.yml && \
     # cleanup to thin the final image
     rm -rf /kibiter && \
     apt-get purge -y g++ git make python zip wget && \
