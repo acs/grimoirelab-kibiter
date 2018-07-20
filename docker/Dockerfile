@@ -21,7 +21,7 @@ RUN apt-get update && \
             wget \
             git \
             python \
-            zip \
+            unzip zip \
             make \
             g++ \
             ruby-dev rpm rubygems \
